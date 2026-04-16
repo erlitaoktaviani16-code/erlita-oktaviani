@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<HTML lang="id">
+ <head>
+   <meta charset="UTF-8">
+  <title>Latihan Markup</title>
+  <link rel="stylesheet" href="style.css">
+ </head>
+ <body>
+  <div id="wrapper">
+   <div id="header">
+    <img src="moonwave.png.png" alt="logo" />
+    <ul id="menu-utama">
+     <li><a href="">Home</a></li>
+     <li><a href="">Tutorial</a></li>
+     <li><a href="">Video</a></li>
+    </ul>
+    <li class="search-item"></li>
+        <form>    
+             <input type="text" class="search" placeholder="Search..."/>
+        </form>
+        </div><!-- Penutup div "header" -->
+
+   <!-- TAMBAHKAN KODE INI DI SINI -->
+   <div class="slider-container">
+    <div class="slider-heeseung">
+     <img src="TungguAkuSuksesNanti.jpg.jpg" alt="Slide 1" />
+     <img src="seninharganaik.jpg.jpg" alt="Slide 2" />
+     <img src="TungguAkuSuksesNanti.jpg.jpg" alt="Slide 3" />
+     <img src="DanurTheLastChapter.jpg" alt="Slide 1" />
+    </div>
+   </div>
+
+   <div id="daftar-artikel">
+   <!-- ... isi artikel ... -->
+               
+       </div><!-- Penutup div "header" -->
+   <div id="daftar-artikel">
+    <div class="artikel">
+     <img src="seninharganaik.jpg.jpg" alt="Gambar Artikel" />
+     <h1>Senin Harga Naik</h1>
+     <b>Apr 15, 2026</b><b>Views : 1,143,029</b>
+     <p>Pertengkaran Mutia (Nadya Arina) dengan Ibunya. Retno (Meriam Bellina) membuatnya pergi dari rumah untuk membuktikan dirinya bisa sukses secara mandiri. Tiga tahun berlalu, promosi karir Mutia di perusahaan property tersandung proyek penggusuran Mercusuar, toko roti legendaris milik Retno. Tidak ada pilihan lain, Mutia kembali ke rumah, dan bekerja sama dengan kakak dan adiknya untuk melunakkan hati ibunya agar mau menjual Mercusuar.</p>
+     <a href="">Watch This</a>
+    </div><!-- Penutup div "artikel" -->
+
+    <div class="artikel">
+     <img src="TungguAkuSuksesNanti.jpg.jpg" alt="Gambar Artikel" />
+     <h1>Tunggu Aku Sukses Nanti</h1>
+     <b>Apr 15, 2026</b><b>Views : 2,538,200</b>
+     <p>Tiap lebaran, Arga (Ardit Erwandha) selalu jadi sasaran cibiran keluarga. Di tengah sepupu-sepupunya yang sudah mapan, Arga yang sudah 3 tahun menganggur pun semakin merasa minder.
+Ekonomi makin sulit, pacar minta segera dinikahi. Adiknya (Adzana Ashel) terancam gagal bayar uang kuliah, dan rumah nenek yang mereka tumpangi hendak dijual. la pontang panting mencari kerja, demi bisa membuktikan diri pada keluarga.</p>
+     <a href="">Watch This</a>
+    </div><!-- Penutup div "artikel" -->
+
+    <div class="artikel">
+     <img src="DanurTheLastChapter.jpg" alt="Gambar Artikel" />
+     <h1>Danur The Last Chapter</h1>
+     <b>Apr 13, 2026</b><b>Views : 3,508,578</b>
+     <p>Setelah bertahun-tahun berpisah dengan teman-teman hantunya, Risa (Prilly Latuconsina) melanjutkan kehidupannya dan menutup gerbang dialog dengan hantu manapun. Namun, hal itu berubah ketika adiknya, Riri (Zee Asadel), dilamar di gedung pertunjukan tua dan mulai bersikap janggal menjelang pernikahannya. Tak hanya perubahan Riri, Risa pun mulai mengalami serangkaian kejadian aneh, seakan dirinya mengalami kematian menyakitkan berkali-kali. Risa curiga ini terjadi karena teman-teman hantunya, Peter Cs, sedang berusaha menyampaikan sesuatu.</p>
+     <a href="">Watch This</a>
+    </div><!-- Penutup div "artikel" -->
+   </div><!-- Penutup div "daftar-artikel" -->
+
+   <div id="sidebar">
+    <h2>Who we are?</h2>
+    <p>Moonwave adalah website yang membahas dunia film dan hiburan, berisi informasi, rekomendasi, serta ulasan film terbaru yang wajib kamu tahu. Cocok untuk kamu yang suka menikmati cerita seru dan sedang mencari tontonan yang asik!!</p>
+
+    <h2>Film berdasarkan kategori</h2>
+    <ul>
+     <li><a href="">Tunggu Aku Sukses Nanti</a></li>
+     <li><a href="">Tiba Tiba Setan</a></li>
+     <li><a href="">Ayah, Ini Arahnya Kemana</a></li>
+     <li><a href="">Senin Harga Naik</a></li>
+     <li><a href="">Danur The Last Chapter</a></li>
+     <li><a href="">Para Perasuk</a></li>
+    </ul>
+   </div><!-- Penutup div "sidebar" -->
+
+   <!--FOOTER-->
+   <div id="footer">
+    <p>Moonwave by Erlita</p>
+   </div>
+
+  </div>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('.slider-heeseung').slick({
+            autoplay: true,
+            autoplaySpeed: 1500,
+            dots: true,
+            arrows: false,
+            infinite: true,
+            fade: true
+        });
+    });
+</script>
+</body>
+</html>
+ 

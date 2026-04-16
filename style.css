@@ -1,0 +1,148 @@
+*{
+ margin:0;
+ padding:0;
+ font-family: calibri, "segoe ui", arial, tahoma, sans-serif;
+}
+
+body{
+ background-color:#DDDDDD;
+}
+
+#wrapper{
+ width:780px;
+ margin:0 auto;
+ overflow:hidden;
+}
+
+#header{
+ background:url(DanurTheLastChapter.jpg) repeat-x #555;
+ height: 100px;
+ width:100%;
+ padding:5px;
+ margin:30px 0;
+ overflow:hidden;
+}
+
+#header img{
+ width: 70px;
+ height:35px;
+}
+
+#menu-utama{
+ margin-top:3px;
+ list-style:none;
+}
+
+/* --- AREA SLIDER --- */
+/* 1. Kontainer Utama */
+.slider-container {
+    width: 780px;
+    margin: 0 auto 30px auto;
+    overflow: hidden;
+    background: #000; /* Warna dasar jika gambar loading */
+}
+
+/* 2. Pengaturan Gambar agar tidak terlalu zoom */
+.slider-heeseung img {
+    width: 100%;
+    height: 400px;      /* Sesuaikan tinggi yang kamu mau */
+    object-fit: contain; /* INI KUNCINYA: Gambar akan tampil utuh tanpa terpotong/zoom */
+    background-color: #333; /* Memberi warna pada sisa ruang kosong di pinggir gambar */
+}
+
+/* 3. Merapikan Titik Navigasi (Dots) Slick */
+.slick-dots {
+    bottom: 10px;
+    list-style: none;
+    display: flex !important;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    width: 100%;
+}
+
+.slick-dots li {
+    margin: 0 5px;
+}
+
+.slick-dots li button:before {
+    color: white !important; /* Warna titik navigasi */
+    font-size: 12px;
+}
+
+  
+#menu-utama li{
+ float:left;
+ padding:8px 20px;
+ border-right:1px solid #555555;
+}
+
+#menu-utama li a{
+ color:#ffffff;
+ text-decoration:none;
+}
+
+#header form{
+ float:right;
+ margin-top:9px;
+ margin-right:15px;
+}
+
+#header form input{
+ border:none;
+ height:20px;
+}
+
+#daftar-artikel{
+ width:470px;
+ float:left;
+ margin-right:20px; /* kasih jarak ke kanan */
+}
+
+.artikel{
+ background:#ffffff;
+ padding:15px;
+ margin-bottom:20px;
+ overflow:hidden;
+}
+
+.artikel img{
+ float:left;
+ margin-right:15px;
+ width:200px;
+ height:165px;
+}
+
+.artikel b{
+ color:#616060;
+ background:#DDDDDD;
+ padding:3px;
+ font-size:12px;
+ font-weight:bold;
+ margin-right:10px;
+}
+
+.artikel p{
+ margin:10px 0;
+ line-height:1.6;
+}
+
+.artikel a{
+ display:block;
+ text-align:right;
+ color:#636363;
+}
+#sidebar{
+ width:280px;
+ float:right;
+ line-height:1.6;
+}
+#footer {
+    clear: both;        /* INI KUNCINYA: Memaksa footer turun melewati elemen float */
+    text-align: center; /* Membuat teks berada di tengah secara horizontal */
+    padding: 20px 0;    /* Memberi jarak atas dan bawah agar tidak sesak */
+    width: 100%;        /* Memastikan footer mengambil lebar penuh */
+    border-top: 1px solid #ccc; /* Garis tipis untuk pemisah (opsional) */
+    background-color: rgb(201, 15, 145);
+}
