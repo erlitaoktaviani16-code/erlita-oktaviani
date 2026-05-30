@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wanderworld - Jelajahi Dunia</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background-color: #faf8f6;
+      color: #1e2a2e;
+      scroll-behavior: smooth;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: #fff;
+      box-shadow: 0 0 20px rgba(0,0,0,0.05);
+      position: relative;
+    }     
+
+    /* ========== NAVBAR HEADER ========== */
+    .navbar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      z-index: 10;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 22px;
+      font-weight: 700;
+      color: #1e2a2e;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 6px 14px;
+      border-radius: 30px;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 10px 30px;
+      border-radius: 40px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .nav-menu a {
+      text-decoration: none;
+      color: #1e2a2e;
+      font-weight: 600;
+      font-size: 15px;
+      transition: color 0.2s;
+      cursor: pointer;
+    }
+
+    .nav-menu a:hover {
+      color: #c56132;
+    }
+
+    .nav-auth {
+      position: relative;
+    }
+
+    .nav-auth .btn-login {
+      background: #c56132;
+      color: #fff;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.2s;
+      box-shadow: 0 4px 10px rgba(197, 97, 50, 0.3);
+    }
+
+    .nav-auth .btn-login:hover {
+      background: #a6481e;
+    }
+
+    .profile-nav-indicator {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .profile-nav-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #c56132;
+    }
+
+    /* ========== HERO SECTION & SLIDER ========== */
+    .hero {
+      position: relative;
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 80px 24px 40px 24px;
+      overflow: hidden;
+      color: #fff;
+    }
+
+    .hero-bg-slider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      transition: background-image 1.5s ease-in-out;
+      z-index: 1;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 2;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      max-width: 800px;
+      margin-top: 40px;
+    }
+
+    /* ========== AUTH & PROFILE CONTAINER (KUSTOM) ========== */
+    .auth-page-view, .profile-page-view {
+      display: none;
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      max-width: 420px;
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: 20px;
+      padding: 30px;
+      color: #1e2a2e;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+      text-align: left;
+      margin-top: 40px;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .profile-page-header, .auth-page-header {
+      font-size: 22px;
+      font-weight: 700;
+      color: #c56132;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #f0e6e0;
+      padding-bottom: 10px;
+      text-align: center;
+    }
+
+    .avatar-upload-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .profile-big-avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #c56132;
+      margin-bottom: 10px;
+    }
+
+    .avatar-label-btn {
+      font-size: 12px;
+      color: #fff;
+      background: #c56132;
+      padding: 6px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .avatar-label-btn:hover {
+      background: #a6481e;
+    }
+
+    #avatarFile {
+      display: none;
+    }
+
+    .profile-page-item {
+      margin-bottom: 15px;
+    }
+
+    .profile-page-item strong, .auth-form-group label {
+      display: block;
+      font-size: 11px;
+      color: #7c8e91;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+
+    .profile-page-item span {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1e2a2e;
+      display: block;
+      padding: 6px 0;
+      border-bottom: 1px solid #f5ede8;
+    }
+
+    .auth-form-group {
+      margin-bottom: 16px;
+    }
+
+    .auth-form-group input {
+      width: 100%;
+      padding: 10px 14px;
+      font-size: 14px;
+      border: 1px solid #dcd1ca;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    .btn-auth-submit {
+      width: 100%;
+      background: #c56132;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .btn-page-logout {
+      width: 100%;
+      background: #e74c3c;
+      color: #fff;
+      border: none;
+      padding: 12px;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    .hero-subquote {
+      font-size: 20px;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .hero-quote {
+      font-size: 48px;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 35px;
+    }
+
+    /* ========== SEARCH BAR ========== */
+    .search-container {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      padding: 6px 12px;
+      border-radius: 50px;
+      width: 100%;
+      max-width: 450px;
+      margin: 0 auto;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    }
+
+    .search-input {
+      border: none;
+      outline: none;
+      padding: 10px 15px;
+      font-size: 16px;
+      width: 100%;
+      border-radius: 50px;
+      color: #1e2a2e;
+    }
+
+    .search-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: #c56132;
+    }
+
+    /* ========== DESTINATIONS FILTER BAR ========== */
+    .destinations-bar {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      padding: 35px 24px;
+      border-bottom: 1px solid #f0e6e0;
+      background: #fff;
+    }
+
+    .destinations-bar span {
+      font-size: 15px;
+      font-weight: 600;
+      color: #4a5b5e;
+      cursor: pointer;
+      padding: 8px 18px;
+      border-radius: 40px;
+      border: 1px solid #e8dfd8;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .destinations-bar span:hover, .destinations-bar span.active {
+      background: #c56132;
+      color: #fff;
+      border-color: #c56132;
+    }
+
+    /* ========== GALERI FOTO ========== */
+    .gallery-section {
+      padding: 60px 24px;
+      background: #fff;
+      border-bottom: 1px solid #f0e6e0;
+    }
+
+    .section-title {
+      font-size: 28px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 10px;
+      color: #2c3e2f;
+    }
+
+    .section-sub {
+      text-align: center;
+      color: #7f8c8d;
+      margin-bottom: 40px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .gallery-card {
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .gallery-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 32px rgba(0,0,0,0.12);
+    }
+
+    .gallery-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .gallery-info {
+      padding: 16px;
+      background: white;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .gallery-country {
+      font-size: 16px;
+      font-weight: 700;
+      color: #c56132;
+      margin-bottom: 4px;
+    }
+
+    .gallery-place {
+      font-size: 14px;
+      color: #2c3e2f;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .gallery-details {
+      margin-top: auto;
+      border-top: 1px dashed #eee;
+      padding-top: 10px;
+      font-size: 13px;
+    }
+
+    /* ========== FORMULIR PEMESANAN TIKET ========== */
+    .ticket-booking-section {
+      display: none;
+      padding: 60px 24px;
+      background: #fdfaf7;
+      border-bottom: 1px solid #f0e6e0;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .booking-container {
+      max-width: 750px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      overflow: hidden;
+      border: 1px solid #f1e7e0;
+    }
+
+    .booking-banner {
+      background: #c56132;
+      color: #fff;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .booking-content {
+      padding: 30px;
+    }
+
+    .summary-box {
+      background: #fef6f2;
+      border-left: 5px solid #c56132;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 25px;
+    }
+
+    .summary-box p {
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 15px;
+      border: 1px solid #dcd1ca;
+      border-radius: 10px;
+      outline: none;
+    }
+
+    .booking-row {
+      display: flex;
+      gap: 15px;
+    }
+
+    .booking-row .form-group {
+      flex: 1;
+    }
+
+    .btn-submit-booking {
+      width: 100%;
+      background: #27ae60;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-cancel-booking {
+      width: 100%;
+      background: none;
+      border: 2px solid #bdc3c7;
+      color: #7f8c8d;
+      padding: 12px;
+      border-radius: 50px;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+
+    /* ========== ULASAN SECTION ========== */
+    .review-section {
+      padding: 60px 24px;
+      position: relative;
+      background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    .review-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.88);
+      z-index: 1;
+    }
+
+    .review-section-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .review-title {
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .review-input-group {
+      margin-bottom: 32px;
+      display: flex;
+      gap: 12px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .review-input {
+      flex: 1;
+      padding: 14px 22px;
+      font-size: 16px;
+      border: 1px solid #c56132;
+      border-radius: 50px;
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    .review-button {
+      background: #c56132;
+      color: white;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .reviews-list {
+      margin: 30px auto;
+      max-width: 800px;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 20px 24px;
+      border-radius: 20px;
+    }
+
+    .review-card {
+      padding: 14px 0;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .review-text {
+      font-size: 15px;
+      color: #2c3e2f;
+    }
+
+    .review-date {
+      font-size: 12px;
+      color: #7f8c8d;
+      white-space: nowrap;
+      margin-left: 10px;
+    }
+
+    /* ABOUT & CONTACT & SOSMED & MISSION */
+    .about-section, .mission-section, .contact-section {
+      margin: 30px auto;
+      max-width: 800px;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 24px;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+    }
+
+    .about-heading, .mission-heading, .contact-heading {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      color: #c56132;
+      border-bottom: 2px solid #f1e7e0;
+      padding-bottom: 6px;
+    }
+
+    .about-text, .mission-section ul {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #34495e;
+      text-align: justify;
+    }
+
+    .mission-section ul {
+      padding-left: 20px;
+      text-align: left;
+    }
+
+    .mission-section li {
+      margin-bottom: 10px;
+    }
+
+    .contact-item {
+      margin-bottom: 12px;
+      font-size: 15px;
+    }
+
+    .social-media-box {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px dashed #dcd1ca;
+      display: flex;
+      gap: 15px;
+    }
+
+    .social-link {
+      font-weight: 600;
+      color: #c56132;
+      text-decoration: none;
+      font-size: 14px;
+      border: 1px solid #c56132;
+      padding: 6px 14px;
+      border-radius: 20px;
+      transition: all 0.2s;
+    }
+
+    .social-link:hover {
+      background: #c56132;
+      color: #fff;
+    }
+
+    .main-footer {
+      background-color: #c56132;
+      color: #faf8f6;
+      text-align: center;
+      padding: 20px 24px;
+    }
+
+    /* MODAL POPUP */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.85);
+      backdrop-filter: blur(5px);
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+
+    .modal-layout {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 650px;
+      width: 100%;
+      position: relative;
+    }
+
+    .modal-content {
+      max-width: 100%;
+      max-height: 40vh;
+      object-fit: contain;
+      border-radius: 12px;
+    }
+
+    .modal-info-box {
+      background: #fff;
+      width: 100%;
+      margin-top: 15px;
+      padding: 24px;
+      border-radius: 12px;
+      text-align: center;
+      max-height: 45vh;
+      overflow-y: auto;
+    }
+
+    .modal-caption {
+      font-size: 20px;
+      font-weight: 700;
+      color: #c56132;
+      margin-bottom: 6px;
+    }
+
+    .modal-estimation {
+      font-size: 14px;
+      font-weight: 600;
+      color: #27ae60;
+      margin-bottom: 14px;
+    }
+
+    .modal-description {
+      font-size: 14px;
+      color: #4f5d61;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      text-align: justify;
+    }
+
+    .btn-buy-ticket {
+      background: #c56132;
+      color: #fff;
+      border: none;
+      padding: 12px 35px;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(197, 97, 50, 0.3);
+    }
+
+    .close-modal {
+      position: absolute;
+      top: -45px;
+      right: 0;
+      color: white;
+      font-size: 36px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 900px) {
+      .navbar { position: static; background: #fff; flex-direction: column; gap: 15px; padding: 15px; }
+      .hero { height: auto; padding: 40px 16px; min-height: auto;}
+      .hero-content, .profile-page-view, .auth-page-view { margin-top: 0; }
+      .booking-row { flex-direction: column; gap: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  
+  <header class="navbar">
+    <div class="nav-logo">
+      <span>✈️ Wanderworld</span>
+    </div>
+    <nav class="nav-menu">
+      <a onclick="scrollToSection('.gallery-section')">Destination</a>
+      <a onclick="scrollToSection('.about-section')">About</a>
+      <a onclick="scrollToSection('#ulasanTarget')">Ulasan</a>
+      <a onclick="scrollToSection('.contact-section')">Hubungi</a>
+    </nav>
+    <div class="nav-auth">
+      <button id="btnLogin" class="btn-login" onclick="showAuthPage()">Login/Sign Up</button>
+      <div id="navProfileIndicator" class="profile-nav-indicator" onclick="showProfilePage()">
+        <img id="navAvatarImg" class="profile-nav-avatar" src="profil.jpg" alt="Avatar">
+        <span id="navProfileName">User</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="hero-bg-slider" id="heroSlider"></div>
+    
+    <div class="hero-content" id="mainHeroContent">
+      <div class="hero-subquote">Let us take you to your</div>
+      <div class="hero-quote">Dream Destination</div>
+      <div class="search-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search...">
+        <button id="searchBtn" class="search-btn">🔍</button>
+      </div>
+    </div>
+
+    <div class="auth-page-view" id="authPageView">
+      <div class="auth-page-header">🔒 Daftar Akun Baru</div>
+      <form id="authForm" onsubmit="handleAuthSubmit(event)">
+        <div class="auth-form-group">
+          <label>Nama Lengkap</label>
+          <input type="text" id="authName" required placeholder="Masukkan nama lengkap">
+        </div>
+        <div class="auth-form-group">
+          <label>Alamat Email</label>
+          <input type="email" id="authEmail" required placeholder="Contoh: user@gmail.com">
+        </div>
+        <div class="auth-form-group">
+          <label>Password</label>
+          <input type="password" id="authPassword" required placeholder="Buat password aman">
+        </div>
+        <button type="submit" class="btn-auth-submit">Daftar & Masuk</button>
+        <button type="button" class="btn-page-logout" style="background:#7f8c8d; margin-top:8px;" onclick="cancelAuth()">Batal</button>
+      </form>
+    </div>
+
+    <div class="profile-page-view" id="profilePageView">
+      <div class="profile-page-header">👤 Profil Pengguna</div>
+      
+      <div class="avatar-upload-container">
+        <img id="profileBigAvatar" class="profile-big-avatar" src="profil.jpg" alt="Big Avatar">
+        <label for="avatarFile" class="avatar-label-btn">Ganti Foto Profil</label>
+        <input type="file" id="avatarFile" accept="image/*" onchange="previewAvatar(event)">
+      </div>
+
+      <div class="profile-page-item">
+        <strong>Nama Lengkap</strong>
+        <span id="profileDataName">-</span>
+      </div>
+      <div class="profile-page-item">
+        <strong>Alamat Email</strong>
+        <span id="profileDataEmail">-</span>
+      </div>
+      <button class="btn-page-logout" style="background: #2ecc71;" onclick="handleOkeSimpan()">Oke</button>
+    </div>
+  </div>
+  
+  <script>
+  function handleOkeSimpan() {
+    const namaYangAktif = document.getElementById('profileDataName').innerText;
+    const emailYangAktif = document.getElementById('profileDataEmail').innerText;
+
+    localStorage.setItem('savedName', namaYangAktif);
+    localStorage.setItem('savedEmail', emailYangAktif);
+
+    alert("Akun Anda berhasil disimpan!");
+
+    document.getElementById('profilePageView').style.display = 'none';
+    document.getElementById('authPageView').style.display = 'none';
+    
+    munculkanKembaliHalamanUtama();
+  }
+
+  function munculkanKembaliHalamanUtama() {
+    const semuaElemen = document.getElementsByTagName('*');
+    
+    for (let i = 0; i < semuaElemen.length; i++) {
+      const el = semuaElemen[i];
+      
+      if (el.innerText && el.innerText.includes("Dream Destination") || el.querySelector('input[type="search"]') || el.className.includes('search')) {
+        el.style.display = ''; 
+        
+        if (el.parentElement) {
+          el.parentElement.style.display = '';
+        }
+      }
+    }
+  }
+
+  function handleAuthSubmit(event) {
+    event.preventDefault();
+    
+    const inputName = document.getElementById('authName').value;
+    const inputEmail = document.getElementById('authEmail').value;
+
+    document.getElementById('profileDataName').innerText = inputName;
+    document.getElementById('profileDataEmail').innerText = inputEmail;
+
+    document.getElementById('authPageView').style.display = 'none';
+    document.getElementById('profilePageView').style.display = 'block';
+  }
+
+  function cancelAuth() {
+    document.getElementById('authPageView').style.display = 'none';
+    munculkanKembaliHalamanUtama();
+  }
+</script>
+
+  <div class="destinations-bar" id="filterBar">
+    <span class="active" data-country="All">🌍 Semua Negara</span>
+    <span data-country="Indonesia">🇮🇩 Indonesia</span>
+    <span data-country="Japan">🇯🇵 Japan</span>
+    <span data-country="Korea">🇰🇷 Korea</span>
+    <span data-country="Thailand">🇹🇭 Thailand</span>
+    <span data-country="French">🇫🇷 French</span>
+  </div>
+
+  <div class="ticket-booking-section" id="bookingSection">
+    <div class="booking-container">
+      <div class="booking-banner">
+        <h2>Formulir Pemesanan Tiket</h2>
+        <p>Isi data Anda untuk melanjutkan perjalanan impian</p>
+      </div>
+      <div class="booking-content">
+        <div class="summary-box">
+          <h3>Detail Tujuan Penerbangan:</h3>
+          <p id="bookingDestName"><strong>Destinasi:</strong> -</p>
+          <p id="bookingDestPrice"><strong>Harga:</strong> -</p>
+          <p id="bookingDestEstimation"><strong>Estimasi Perjalanan:</strong> -</p>
+        </div>
+        <form id="ticketForm" onsubmit="submitTicketOrder(event)">
+          <div class="form-group">
+            <label>Nama Lengkap Penumpang</label>
+            <input type="text" id="bookName" required placeholder="Masukkan Nama Anda ">
+          </div>
+          <div class="form-group">
+            <label>Nomor Identitas (NIK/Paspor)</label>
+            <input type="text" id="bookId" required placeholder="Contoh: 3174xxxxxxxxxxxx">
+          </div>
+          <div class="booking-row">
+            <div class="form-group">
+              <label>Tanggal Keberangkatan</label>
+              <input type="date" id="bookDate" required>
+            </div>
+            <div class="form-group">
+              <label>Jumlah Tiket</label>
+              <select id="bookQty">
+                <option value="1">1 Tiket</option>
+                <option value="2">2 Tiket</option>
+                <option value="3">3 Tiket</option>
+                <option value="4">4 Tiket</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="btn-submit-booking">Konfirmasi & Bayar Sekarang</button>
+          <button type="button" class="btn-cancel-booking" onclick="closeBookingSection()">Batal Pesan</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="gallery-section">
+    <div class="section-title">✨ Destinations Inspiration ✨</div>
+    <div class="section-sub">Klik foto untuk melihat info tiket & penjelasan tempat</div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+
+  <div class="review-section">
+    <div class="review-section-content">
+      <div id="ulasanTarget" class="review-title">Ayo Berikan Ulasan Mu Hasil Liburan</div>
+      <div class="review-input-group">
+        <input type="text" id="reviewInput" class="review-input" placeholder="Masukkan Ulasan...">
+        <button id="submitBtn" class="review-button">Kirim</button>
+      </div>
+      <div id="reviewsContainer" class="reviews-list">
+        <div class="review-card"><span class="review-text">Web nya keren, gampang buat cari inspirasi liburan!</span><span class="review-date">27 Mei 2026, 12:45</span></div>
+      </div>
+
+      <div class="about-section">
+        <div class="about-heading">ℹ️ TENTANG WANDERWORLD</div>
+        <div class="about-text">
+          Wanderworld adalah platform agen penjelajahan dan pencarian destinasi global modern yang dirancang khusus untuk mewujudkan liburan impian Anda menjadi kenyataan secara praktis, transparan, dan efisien. Kami percaya bahwa melakukan perjalanan ke luar negeri bukan lagi sekadar impian yang rumit, melainkan sebuah pengalaman berharga yang berhak didapatkan oleh semua orang. Berbekal teknologi mutakhir, sistem kurasi tempat wisata yang matang, serta integrasi pemesanan tiket penerbangan real-time, Wanderworld hadir sebagai sahabat terbaik Anda dalam merencanakan perjalanan, mulai dari menentukan negara tujuan terbaik hingga menyusun estimasi waktu ketibaan dengan akurat demi kenyamanan maksimal liburan Anda.
+        </div>
+      </div>
+
+      <div class="mission-section">
+        <div class="mission-heading">🎯 VISI & MISI KAMI</div>
+        <ul>
+          <li><strong>Visi Kami:</strong> Menjadi platform eksplorasi wisata global nomor satu pilihan masyarakat dunia yang menghubungkan jutaan pelancong dengan destinasi impian secara aman, menginspirasi budaya baru, serta mengedepankan kemudahan teknologi pariwisata satu pintu.</li>
+          <li><strong>Misi Web Wanderworld:</strong> Menyediakan database informasi pariwisata lintas negara terlengkap dengan akurasi harga tiket yang transparan tanpa biaya tersembunyi.</li>
+          <li><strong>Misi Sistem:</strong> Membantu para traveler memperkirakan efisiensi waktu perjalanan melalui fitur kalkulasi estimasi durasi penerbangan dari bandara asal ke titik lokasi tujuan.</li>
+          <li><strong>Misi Pengguna:</strong> Membangun ekosistem komunitas pariwisata yang aktif dan saling mendukung melalui kolom ulasan interaktif hasil liburan dari para pengguna setia kami.</li>
+        </ul>
+      </div>
+
+      <div class="contact-section">
+        <div class="contact-heading">📞 Hubungi Kami</div>
+        <div class="contact-item">📱 No. Telp: <strong id="phoneNumber">+62 856-9021-3786</strong></div>
+        
+        <div class="social-media-box">
+          <a href="#" class="social-link">📸 Instagram</a>
+          <a href="#" class="social-link">🎵 TikTok</a>
+          <a href="#" class="social-link">👥 Facebook</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="main-footer">
+    Copyright @2026 Wanderworld By Erlita & Erlangga
+  </footer>
+</div>
+
+<div id="imageModal" class="modal">
+  <div class="modal-layout">
+    <span class="close-modal">&times;</span>
+    <img class="modal-content" id="modalImage">
+    <div class="modal-info-box">
+      <div id="modalCaption" class="modal-caption"></div>
+      <div id="modalEstimation" class="modal-estimation"></div>
+      <div id="modalDescription" class="modal-description"></div>
+      <button id="modalBuyBtn" class="btn-buy-ticket">Buka Pesanan</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // SLIDER BACKGROUND HERO
+  const sliderImages = [
+    "bg1.jpeg",
+    "bg2.jpeg",
+    "bg3.jpeg",
+    "bg4.jpeg"
+  ];
+  let currentSliderIndex = 0;
+  function changeSlider() {
+    const slider = document.getElementById('heroSlider');
+    if(slider) {
+      slider.style.backgroundImage = `url('${sliderImages[currentSliderIndex]}')`;
+      currentSliderIndex = (currentSliderIndex + 1) % sliderImages.length;
+    }
+  }
+  changeSlider(); setInterval(changeSlider, 4000);
+
+  function scrollToSection(selector) {
+    document.querySelector(selector).scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // DATABASE DESTINASI WISATA LENGKAP
+  const photoDatabase = [
+    // === INDONESIA ===
+    { country: "Indonesia", place: "Bali - Pura Ulun Danu", price: "Rp 1.200.000", estimation: "1 Jam 50 Menit (Penerbangan Langsung)", description: "Pura Ulun Danu Beratan adalah sebuah candi air besar dan suci di Bali, Indonesia yang dibangun pada awal abad ke-17. Terletak di tepi dataran tinggi Danau Beratan di Bedugul, pura ini dikelilingi oleh udara pegunungan yang sejuk serta pemandangan air danau yang jernih memantulkan keindahan arsitektur pura meru bertingkat. Tempat ini didedikasikan untuk Dewi Danu, yaitu dewi air, danau, dan sungai yang memberkati kesuburan tanah Bali. Pura ini menjadi salah satu daya tarik utama fotografi dunia karena keunikan bangunannya yang terlihat mengapung di atas air saat debit danau sedang pasang.", url: "bali.jpeg" },
+    { country: "Indonesia", place: "Raja Ampat - Papua", price: "Rp 3.500.000", estimation: "4 Jam 10 Menit (Transit di Sorong)", description: "Kepulauan Raja Ampat adalah destinasi wisata bawah laut terkenal di Indonesia yang memiliki ribuan pulau indah, terumbu karang, dan ikan tropis eksotis. Tempat ini sangat populer untuk diving, snorkeling, dan menikmati pemandangan alam yang menakjubkan.", url: "raja ampat.jpg" },
+    { country: "Indonesia", place: "Gunung Bromo - Jatim", price: "Rp 650.000", estimation: "1 Jam 30 Menit (Terbang ke Malang/Surabaya)", description: "Gunung Bromo adalah gunung berapi aktif di Jawa Timur yang terkenal dengan lautan pasir, pemandangan sunrise, dan kawahnya. Wisatawan juga dapat menikmati perjalanan menggunakan jeep dan kuda di kawasan Bromo.", url: "brommo.jpg.webp" },
+    { country: "Indonesia", place: "Labuan Bajo - NTT", price: "Rp 2.800.000", estimation: "2 Jam 25 Menit (Penerbangan Langsung)", description: "Labuan Bajo adalah kota pelabuhan di Flores yang menjadi gerbang menuju Taman Nasional Komodo. Tempat ini terkenal dengan Pulau Padar, Pink Beach, Komodo Dragon, serta keindahan bawah lautnya yang cocok untuk diving dan snorkeling.", url: "laboan.jpg" },
+
+    // === JAPAN ===
+    { country: "Japan", place: "Gunung Fuji - Tokyo", price: "Rp 6.500.000", estimation: "7 Jam 15 Menit (Penerbangan Langsung)", description: "Gunung Fuji adalah gunung tertinggi dan simbol terkenal Jepang yang memiliki bentuk kerucut sempurna serta puncak bersalju. Tempat ini populer untuk menikmati pemandangan sakura dan telah menjadi Situs Warisan Dunia UNESCO.", url: "fuji.jpg" },
+    { country: "Japan", place: "Kyoto - Fushimi Inari", price: "Rp 6.800.000", estimation: "6 Jam 30 Menit (Terbang ke Osaka - Kansai)", description: "Fushimi Inari Taisha adalah kuil Shinto terkenal di Kyoto yang didedikasikan untuk dewa Inari. Tempat ini terkenal dengan ribuan gerbang Torii merah oranye yang membentuk jalur pendakian spiritual yang indah dan ikonik.", url: "kyoto2.jpeg" },
+    { country: "Japan", place: "Tokyo - Shibuya Crossing", price: "Rp 6.200.000", estimation: "7 Jam 15 Menit (Penerbangan Langsung)", description: "Shibuya Crossing adalah persimpangan jalan tersibuk di dunia yang berada di depan Stasiun Shibuya, Tokyo. Tempat ini terkenal dengan keramaian pejalan kaki, lampu neon, dan suasana modern khas kehidupan urban Jepang.", url: "tokyo.webp" },
+    { country: "Japan", place: "Osaka Castle", price: "Rp 6.400.000", estimation: "6 Jam 30 Menit (Penerbangan Langsung)", description: "Osaka Castle adalah kastil bersejarah di Jepang yang dibangun pada abad ke-16 oleh Toyotomi Hideyoshi. Tempat ini kini menjadi museum sejarah samurai dan dikelilingi taman indah yang dipenuhi bunga sakura saat musim semi.", url: "osaka2.jpeg" },
+
+    // === KOREA ===
+    { country: "Korea", place: "Gyeongbokgung Palace - Seoul", price: "Rp 5.500.000", estimation: "7 Jam 05 Menit (Penerbangan Langsung)", description: "Gyeongbokgung Palace adalah istana utama Dinasti Joseon yang dibangun pada tahun 1395 di Seoul. Tempat ini terkenal dengan arsitektur tradisional Korea, upacara pergantian penjaga, dan pengalaman memakai hanbok bagi pengunjung.", url: "seoul2.jpeg" },
+    { country: "Korea", place: "Jeju Island", price: "Rp 5.900.000", estimation: "9 Jam 20 Menit (Transit di Seoul Incheon)", description: "Jeju Island adalah pulau vulkanik di selatan Korea Selatan yang terkenal dengan keindahan alamnya seperti pantai, air terjun, dan kawah Seongsan Ilchulbong. Pulau ini juga memiliki budaya unik seperti patung Dol Hareubang dan para penyelam wanita tradisional Haenyeo.", url: "jeju.jpg" },
+    { country: "Korea", place: "Namsan Seoul Tower", price: "Rp 5.200.000", estimation: "7 Jam 05 Menit (Penerbangan Langsung)", description: "N Seoul Tower adalah menara observasi di puncak Gunung Namsan yang menawarkan pemandangan kota Seoul dari ketinggian. Tempat ini juga terkenal sebagai lokasi romantis dengan ribuan “gembok cinta” yang dipasang oleh pengunjung.", url: "namsan.jpeg" },
+    { country: "Korea", place: "Bukchon Hanok Village", price: "Rp 5.300.000", estimation: "7 Jam 05 Menit (Penerbangan Langsung)", description: "Bukchon Hanok Village adalah kawasan pemukiman tradisional di Seoul yang dipenuhi rumah Hanok peninggalan Dinasti Joseon. Tempat ini terkenal dengan suasana klasik, lorong-lorong sempit, dan pemandangan kontras antara rumah tradisional dan gedung modern kota Seoul.", url: "bukchon.jpeg" },
+
+    // === THAILAND ===
+    { country: "Thailand", place: "Wat Arun - Bangkok", price: "Rp 1.800.000", estimation: "3 Jam 35 Menit (Penerbangan Langsung)", description: "Wat Arun adalah kuil Buddha di tepi Sungai Chao Phraya yang terkenal dengan menara tinggi (Prang) berlapis porselen. Tempat ini populer karena keindahan saat matahari terbit dan terbenam yang membuatnya tampak berkilau.", url: "bangkokk.jpeg" },
+    { country: "Thailand", place: "Phuket Island", price: "Rp 2.200.000", estimation: "5 Jam 15 Menit (Transit di Bangkok)", description: "Phuket adalah pulau wisata terbesar di Thailand yang terkenal dengan pantai berpasir putih, laut biru jernih, dan kehidupan malam yang ramai di Patong Beach. Pulau ini juga menawarkan wisata alam, Big Buddha, dan kota tua berarsitektur Sino-Portuguese.", url: "phuket.jpeg" },
+    { country: "Thailand", place: "Chiang Mai Elephant Sanctuary", price: "Rp 2.400.000", estimation: "6 Jam 10 Menit (Transit di Bangkok)", description: "Elephant Nature Park adalah suaka gajah di Thailand Utara yang berfokus pada pelestarian dan perawatan gajah secara etis. Pengunjung dapat berinteraksi langsung seperti memberi makan dan memandikan gajah di lingkungan alam yang aman.", url: "chiang mai2.jpeg" },
+    { country: "Thailand", place: "Pattaya Beach", price: "Rp 1.900.000", estimation: "3 Jam 35 Menit (Ditambah 2 Jam jalur darat dari Bangkok)", description: "Pattaya Beach adalah destinasi wisata pantai dekat Bangkok yang terkenal dengan hiburan air, pasar terapung, dan kehidupan malam yang ramai. Tempat ini juga populer dengan Walking Street serta kuliner seafood yang beragam.", url: "beach.jpeg" },
+
+    // === FRENCH ===
+    { country: "French", place: "Menara Eiffel - Paris", price: "Rp 11.500.000", estimation: "14 Jam 40 Menit (Penerbangan Transit)", description: "Eiffel Tower adalah menara besi ikonik di Paris yang dibangun pada tahun 1889. Tempat ini terkenal sebagai simbol kota Paris dan menawarkan pemandangan indah dari dek observasinya, terutama saat malam hari dengan lampu emas yang menyala.", url: "paris.jpeg" },
+    { country: "French", place: "Museum Louvre - Paris", price: "Rp 11.200.000", estimation: "14 Jam 40 Menit (Penerbangan Transit)", description: "Louvre Museum adalah museum seni terbesar di dunia yang terletak di Paris, Prancis. Tempat ini terkenal dengan koleksi seni bersejarah seperti Mona Lisa dan Venus de Milo serta ikon Piramida Kaca di halamannya.", url: "museumm.jpeg" },
+    { country: "French", place: "Palace of Versailles", price: "Rp 11.800.000", estimation: "14 Jam 40 Menit (Ditambah kereta lokal dari Paris)", description: "Palace of Versailles adalah istana bersejarah di dekat Paris yang menjadi pusat kekuasaan Raja Louis XIV. Tempat ini terkenal dengan kemewahan ruangannya, Aula Cermin, dan taman luas bergaya Prancis yang indah.", url: "palacee.jpeg" },
+    { country: "French", place: "Mont Saint-Michel", price: "Rp 12.300.000", estimation: "14 Jam 40 Menit (Ditambah Bus/Kereta TGV dari Paris)", description: "Mont Saint-Michel adalah desa-biara di atas pulau batu di Prancis yang terkenal sebagai Situs Warisan Dunia UNESCO. Tempat ini unik karena saat air pasang terlihat seperti pulau yang “mengapung” di laut, dan saat surut bisa diakses lewat daratan.", url: "mount saint.jpg" }
+  ];
+
+  // FUNGSI UTAMA RENDER GALERI
+  function renderGallery(filterCountry = 'All', searchKeyword = '') {
+    const grid = document.getElementById('galleryGrid');
+    if (!grid) return;
+    
+    let filtered = photoDatabase;
+    if (filterCountry !== 'All') {
+      filtered = filtered.filter(p => p.country.toLowerCase() === filterCountry.toLowerCase());
+    }
+    if (searchKeyword !== '') {
+      filtered = filtered.filter(p => 
+        p.country.toLowerCase().includes(searchKeyword.toLowerCase()) || 
+        p.place.toLowerCase().includes(searchKeyword.toLowerCase())
+      );
+    }
+
+    grid.innerHTML = '';
+    if (filtered.length === 0) {
+      grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #7f8c8d; font-weight: 600;">⚠️ Destinasi tidak ditemukan.</div>`;
+      return;
+    }
+
+    filtered.forEach(photo => {
+      const card = document.createElement('div');
+      card.className = 'gallery-card';
+      card.innerHTML = `
+        <img class="gallery-img" src="${photo.url}" alt="${photo.place}" loading="lazy">
+        <div class="gallery-info">
+          <div class="gallery-country">📍 ${photo.country}</div>
+          <div class="gallery-place">${photo.place}</div>
+          <div class="gallery-details">🎫 Mulai: <strong style="color:#27ae60;">${photo.price}</strong></div>
+        </div>
+      `;
+      card.addEventListener('click', () => openModal(photo));
+      grid.appendChild(card);
+    });
+  }
+
+  // EVENT TOMBOL NEGARA BAR
+  const spans = document.querySelectorAll('#filterBar span');
+  spans.forEach(span => {
+    span.addEventListener('click', function() {
+      spans.forEach(s => s.classList.remove('active'));
+      this.classList.add('active');
+      const country = this.getAttribute('data-country');
+      document.getElementById('searchInput').value = '';
+      renderGallery(country, '');
+    });
+  });
+
+  function executeSearch() {
+    const keyword = document.getElementById('searchInput').value.trim();
+    spans.forEach(s => s.classList.remove('active'));
+    spans[0].classList.add('active');
+    renderGallery('All', keyword);
+    scrollToSection('.gallery-section');
+  }
+
+  document.getElementById('searchBtn').addEventListener('click', executeSearch);
+  document.getElementById('searchInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') executeSearch();
+  });
+
+  // MODAL TICKETING LOGIC
+  const modal = document.getElementById('imageModal');
+  const modalImg = document.getElementById('modalImage');
+  const modalCaption = document.getElementById('modalCaption');
+  const modalNavEst = document.getElementById('modalEstimation');
+  const modalDesc = document.getElementById('modalDescription');
+  const modalBuyBtn = document.getElementById('modalBuyBtn');
+  const closeModal = document.querySelector('.close-modal');
+  let selectedDestination = null;
+
+  function openModal(photoObj) {
+    selectedDestination = photoObj;
+    modal.style.display = 'flex';
+    modalImg.src = photoObj.url;
+    modalCaption.textContent = `${photoObj.country} — ${photoObj.place}`;
+    modalNavEst.textContent = `⏱️ Estimasi Perjalanan: ${photoObj.estimation}`;
+    modalDesc.textContent = photoObj.description;
+  }
+
+  closeModal.onclick = function() { modal.style.display = 'none'; }
+  window.onclick = function(e) { if (e.target === modal) modal.style.display = 'none'; }
+
+  modalBuyBtn.onclick = function() {
+    modal.style.display = 'none';
+    document.getElementById('bookingDestName').innerHTML = `<strong>Destinasi:</strong> ${selectedDestination.place}`;
+    document.getElementById('bookingDestPrice').innerHTML = `<strong>Harga:</strong> <span style="color:#27ae60; font-weight:bold;">${selectedDestination.price}</span>`;
+    document.getElementById('bookingDestEstimation').innerHTML = `<strong>Estimasi Perjalanan:</strong> ${selectedDestination.estimation}`;
+    document.getElementById('bookingSection').style.display = 'block';
+    scrollToSection('#bookingSection');
+  };
+
+  function closeBookingSection() { document.getElementById('bookingSection').style.display = 'none'; }
+
+  function submitTicketOrder(event) {
+    event.preventDefault();
+    const name = document.getElementById('bookName').value;
+    alert(`🎉 PEMESANAN BERHASIL!\n\nTerima kasih ${name},\nTiket ke [ ${selectedDestination.place} ] dipesan. Info dikirim ke email kamu!`);
+    document.getElementById('ticketForm').reset();
+    closeBookingSection();
+  }
+
+  // ================= SYSTEM LOGIN / AUTH & PROFIL (TERBARU) =================
+  let currentProfilePhoto = "foto2.jpeg";
+
+  function showAuthPage() {
+    document.getElementById('mainHeroContent').style.display = 'none';
+    document.getElementById('profilePageView').style.display = 'none';
+    document.getElementById('authPageView').style.display = 'block';
+    scrollToSection('.hero');
+  }
+
+  function cancelAuth() {
+    document.getElementById('authPageView').style.display = 'none';
+    document.getElementById('mainHeroContent').style.display = 'block';
+  }
+
+  function handleAuthSubmit(event) {
+    event.preventDefault();
+    const nameValue = document.getElementById('authName').value;
+    const emailValue = document.getElementById('authEmail').value;
+
+    // Sinkronisasi Data ke UI Navigasi dan Halaman Profil
+    document.getElementById('navProfileName').textContent = nameValue;
+    document.getElementById('profileDataName').textContent = nameValue;
+    document.getElementById('profileDataEmail').textContent = emailValue;
+
+    // Set Foto Bawaan Pertama Kali
+    document.getElementById('navAvatarImg').src = currentProfilePhoto;
+    document.getElementById('profileBigAvatar').src = currentProfilePhoto;
+
+    // Ganti Bar Navigasi dari Tombol Login menjadi Identitas Akun
+    document.getElementById('btnLogin').style.display = 'none';
+    document.getElementById('navProfileIndicator').style.display = 'flex';
+
+    // Tampilkan Halaman Profil Khusus
+    document.getElementById('authPageView').style.display = 'none';
+    document.getElementById('profilePageView').style.display = 'block';
+  }
+
+  function showProfilePage() {
+    document.getElementById('mainHeroContent').style.display = 'none';
+    document.getElementById('authPageView').style.display = 'none';
+    document.getElementById('profilePageView').style.display = 'block';
+    scrollToSection('.hero');
+  }
+
+  // LOGIKA GANTI FOTO PROFIL
+  function previewAvatar(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        currentProfilePhoto = e.target.result;
+        document.getElementById('profileBigAvatar').src = currentProfilePhoto;
+        document.getElementById('navAvatarImg').src = currentProfilePhoto;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  function handleLogout() {
+    // Reset Formulir dan status gambar
+    document.getElementById('authForm').reset();
+    currentProfilePhoto = "profil.jpg";
+    
+    // Kembalikan Tampilan Interface Utama
+    document.getElementById('navProfileIndicator').style.display = 'none';
+    document.getElementById('btnLogin').style.display = 'block';
+    document.getElementById('profilePageView').style.display = 'none';
+    document.getElementById('mainHeroContent').style.display = 'block';
+  }
+
+  // ================= SYSTEM ULASAN DENGAN REAL TIME TIME-STAMP =================
+  document.getElementById('submitBtn').addEventListener('click', function() {
+    const inputReview = document.getElementById('reviewInput');
+    if(inputReview.value.trim() !== "") {
+      
+      // Mengambil Waktu Sekarang Secara Akurat (WIB / Lokal Sistem)
+      const sekarang = new Date();
+      const daftarBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+      
+      const tanggal = sekarang.getDate();
+      const bulan = daftarBulan[sekarang.getMonth()];
+      const tahun = sekarang.getFullYear();
+      
+      // Format Menit Agar Tetap Dua Digit (Misal 05 menit)
+      let jam = sekarang.getHours();
+      let menit = sekarang.getMinutes();
+      if(menit < 10) menit = '0' + menit;
+      if(jam < 10) jam = '0' + jam;
+
+      const formatWaktuLengkap = `${tanggal} ${bulan} ${tahun}, ${jam}:${menit}`;
+
+      // Buat Baris Elemen Review Baru
+      const container = document.getElementById('reviewsContainer');
+      const newReview = document.createElement('div');
+      newReview.className = 'review-card';
+      newReview.innerHTML = `
+        <span class="review-text">${inputReview.value}</span>
+        <span class="review-date">${formatWaktuLengkap}</span>
+      `;
+      
+      container.insertBefore(newReview, container.firstChild);
+      inputReview.value = "";
+    }
+  });
+
+  // JALANKAN PERTAMA KALI
+  renderGallery('All', '');
+</script>
+</body>
+</html>
